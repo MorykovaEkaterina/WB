@@ -20,26 +20,48 @@ public class EbayLoginTest {
 
     @Test
     public  void loginTest(){
-        wd.get("https://www.ebay.com");
-
-        wd.findElement(By.xpath("//a[contains(text(),'Sign in')]")).click();
-
-        wd.findElement(By.xpath("//input[@id='userid']")).click();
-        wd.findElement(By.xpath("//input[@id='userid']")).clear();
-        wd.findElement(By.xpath("//input[@id='userid']")).sendKeys("username");
-
-        wd.findElement(By.xpath("//input[@id='pass']")).click();
-        wd.findElement(By.xpath("//input[@id='pass']")).clear();
-        wd.findElement(By.xpath("//input[@id='pass']")).sendKeys("123456");
-
-        wd.findElement(By.xpath("//button[@id='sgnBt']")).click();
+        openSite("https://www.ebay.com");
+        initLogin();
+        fillLoginForm("username", "123456");
+        confirmLogin();
 
     }
 
     @AfterTest
     public  void  tearDown(){
-        wd.quit();
+        stop();
 
+    }
+
+    public void confirmLogin() {
+        click(By.xpath("//button[@id='sgnBt']"));
+    }
+
+    public void click(By locator) {
+        wd.findElement(locator).click();
+    }
+
+    public void fillLoginForm(String user, String pwd) {
+        type(By.xpath("//input[@id='userid']"), user);
+        type(By.xpath("//input[@id='pass']"), pwd);
+    }
+
+    public void type(By locator, String text) {
+        click(locator);
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+    }
+
+    public void initLogin() {
+        click(By.xpath("//a[contains(text(),'Sign in')]"));
+    }
+
+    public void openSite(String url) {
+        wd.get(url);
+    }
+
+    public void stop() {
+        wd.quit();
     }
 }
 

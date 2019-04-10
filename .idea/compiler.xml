@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="WB" />
         <module name="WB_1" />
+        <module name="WB" />
       </profile>
     </annotationProcessing>
   </component>

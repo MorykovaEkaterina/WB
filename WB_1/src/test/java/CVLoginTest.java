@@ -18,24 +18,46 @@ public class CVLoginTest {
     }
     @Test
     public  void loginTestCV(){
-        wd.get("https://cvbank.soft-gen.com/");
-
-        wd.findElement(By.xpath("//button[contains(text(),'Log In')]")).click();
-
-        wd.findElement(By.xpath("//input[@placeholder='email']")).click();
-        wd.findElement(By.xpath("//input[@placeholder='email']")).clear();
-        wd.findElement(By.xpath("//input[@placeholder='email']")).sendKeys("cat@gmail.com");
-
-        wd.findElement(By.xpath("//input[@placeholder='password']")).click();
-        wd.findElement(By.xpath("//input[@placeholder='password']")).clear();
-        wd.findElement(By.xpath("//input[@placeholder='password']")).sendKeys("123456");
-
-        wd.findElement(By.xpath("//button[@type='submit']")).click();
+        openSite("https://cvbank.soft-gen.com/");
+        initLogin();
+        fillLoginForm("cat@gmail.com", "123456");
+        confirmLogin();
 
     }
-
     @AfterTest
     public void tearDown(){
+        stop();
+    }
+    
+    public void confirmLogin() {
+        click(By.xpath("//button[@type='submit']"));
+    }
+
+    public void click(By locator) {
+        wd.findElement(locator).click();
+    }
+
+    public void fillLoginForm(String email, String pwd) {
+        type(By.xpath("//input[@placeholder='email']"), email);
+        type(By.xpath("//input[@placeholder='password']"), pwd);
+    }
+
+    public void type(By locator, String text) {
+        click(locator);
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+    }
+
+    public void initLogin() {
+        click(By.xpath("//button[contains(text(),'Log In')]"));
+    }
+
+    public void openSite(String url) {
+        wd.get(url);
+    }
+    public void stop() {
         wd.quit();
     }
+
+    
 }
